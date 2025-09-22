@@ -4,10 +4,12 @@ const saleController = require('../controllers/sales.controller');
 
 router.post('/insert-data', saleController.insertSaleData);
 router.get('/', saleController.getAllSales);
+router.get('/complex-query', saleController.findComplexSales);
 router.get('/:id', saleController.getSaleById);
 router.put('/:id', saleController.updateSale);
 router.delete('/:id', saleController.deleteSale);
 router.patch('/:id/totalInitiated', saleController.changeTotalInitiated);
+
 
 module.exports = router;
 
