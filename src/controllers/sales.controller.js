@@ -1,6 +1,4 @@
 const httpStatus = require("http-status");
-console.log("httpStatus", httpStatus);
-
 const { saleService } = require("../services");
 const { saleDataSchema, validateSaleSchema } = require('../validations');
 
