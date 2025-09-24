@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 
 app.use(express.json());
-const saleRoutes = require('./router/sales.router');
+const {saleRoutes} = require('./routes');
 
 app.use('/sales', saleRoutes);
 

@@ -1,4 +1,5 @@
-const Sale = require('../models/sales.models');
+const { Sale } = require("../models"); 
+
 
 const insertSaleData = async (body) => {
   try {
@@ -10,7 +11,7 @@ const insertSaleData = async (body) => {
     const saleArray = Array.isArray(body.saleData) ? body.saleData : [body.saleData];
     console.log("Total sales received: ", saleArray.length);
 
-    // Build bulk operations
+ 
     const bulkOps = saleArray.map((sale) => ({
       insertOne: { document: { saleData: sale } }
     }));
@@ -30,6 +31,23 @@ const getAllSales = async () => {
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch sales");
+  }
+};
+
+const getSalesByTimeStamps = async (start, end) => {
+  try {
+    const query = {};
+    if (start && end) {
+      query.timeStamps = { $gte: new Date(start), $lte: new Date(end) };
+    } else if (start) {
+      query.timeStamps = { $gte: new Date(start) };
+    } else if (end) {
+      query.timeStamps = { $lte: new Date(end) };
+    }
+    return await Sale.find(query);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch sales by timeStamps");
   }
 };
 
@@ -89,7 +107,7 @@ const findComplexSales = async () => {
           ]
         },
         {
-          "saleData.qr-ticket.totalCapturedCount": { $in: [100, 200, 300, 1277] } // add required values
+          "saleData.qr-ticket.totalCapturedCount": { $in: [100, 200, 300, 1277] }
         }
       ]
     });
@@ -105,6 +123,7 @@ const findComplexSales = async () => {
 module.exports = {
   insertSaleData,
   getAllSales,
+  getSalesByTimeStamps,
   getSaleById,
   updateSale,
   deleteSale,

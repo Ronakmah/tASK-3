@@ -12,19 +12,11 @@ const saleSchema = new mongoose.Schema({
 
 const mainSchema = new mongoose.Schema({
   saleData: {
-    "qr-ticket": saleSchema,
-    "metro-card-recharge": saleSchema,
-    "wallet-topup": saleSchema,
-    "sv-qr-topup": saleSchema,
-    "integrated-last-mile-connectivity": saleSchema,
-    "last-mile-connectivity": saleSchema,
-    "utility": saleSchema,
-    "store-value-qr": saleSchema,
-    "locker-console-booking": saleSchema,
-    "qr-ticket-airportLine": saleSchema,
-    "ecommerce": saleSchema,
-    "rrts-tickets": saleSchema
+    type: Map,
+    of: saleSchema,   
+    required: true
   }
-});
+}, { timestamps: true });
+
 
 module.exports = mongoose.model('Sale', mainSchema);
